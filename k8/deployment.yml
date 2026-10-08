@@ -1,0 +1,32 @@
+apiVersion: apps/v1
+kind: Deployment
+
+metadata:
+  name: chaos-monkey-fastapi
+
+spec:
+  replicas: 3
+
+  selector:
+    matchLabels:
+      app: chaos-monkey-fastapi
+
+  template:
+    metadata:
+      labels:
+        app: chaos-monkey-fastapi
+
+    spec:
+      containers:
+        - name: fastapi
+          image: chaos-monkey-fastapi:latest
+          imagePullPolicy: IfNotPresent
+          readinessProbe:
+            httpGet:
+              path: /healthz
+              port: 8000
+            initialDelaySeconds: 2
+            periodSeconds: 5
+          ports:
+            - containerPort: 8000
+# The application inside the container listens on port 8000.

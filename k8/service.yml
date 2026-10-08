@@ -1,0 +1,13 @@
+apiVersion: v1
+kind: Service
+
+metadata:
+  name: chaos-monkey-fastapi
+
+spec:
+  selector:
+    app: chaos-monkey-fastapi
+
+  ports:
+    - port: 80
+      targetPort: 8000

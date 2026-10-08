@@ -1,0 +1,31 @@
+apiVersion: v1
+kind: ServiceAccount
+
+metadata:
+  name: chaosmonkey
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: Role
+
+metadata:
+  name: chaosmonkey
+
+rules:
+  - apiGroups: [""]
+    resources: ["pods"]
+    verbs: ["list", "delete"]
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+
+metadata:
+  name: chaosmonkey
+
+subjects:
+  - kind: ServiceAccount
+    name: chaosmonkey
+
+roleRef:
+  kind: Role
+  name: chaosmonkey
+  apiGroup: rbac.authorization.k8s.io
